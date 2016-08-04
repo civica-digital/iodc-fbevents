@@ -22,12 +22,16 @@ def extract_pages(set_ids, input_results):
     return(set_ids)
 
 def get_results_ids_fb(query):
-    search_term = query + "  site:facebook.com/events"
+    search_term = query + " site:facebook.com/events"
     bing_web = PyBingWebSearch(API_KEY, search_term)
     results = bing_web.search(limit=50, format='json')
     set_ids = set([])
     while len(results)>0:
         print(len(results))
         set_ids = extract_pages(set_ids,results)
-        results = bing_web.search(limit=50, format='json') #1-50
-    return(set_ids)
+        if len(results) < 50:
+            results = []
+        else:
+            results = bing_web.search(limit=50, format='json') #1-50
+    ids_list=list(set_ids)
+    return(ids_list)

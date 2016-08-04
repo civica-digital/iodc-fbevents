@@ -12,19 +12,19 @@ events = db.events
 queue = db.queue
 
 def get_next_queue():
-    next_id = list(queue.find({}).limit(1))[0]["_id"]
+    next_id = list(queue.find({}).limit(1))[0]
     return next_id
 
 def delete_queue(id):
     queue.remove({"_id":id})
     return None
 
-def insert_queue(unique_id, keyword):
+def insert_queue(id, keyword):
     if type(id) is list:
         for unique_id in id:
             queue.update({"_id":unique_id}, {"$push": {"keywords" : keyword } }, upsert= True)
     else:
-        queue.update({"_id":unique_id}, {"$push": {"keywords" : keyword } }, upsert= True)
+        queue.update({"_id":id}, {"$push": {"keywords" : keyword } }, upsert= True)
     return None
 
 def insert_event(document):
