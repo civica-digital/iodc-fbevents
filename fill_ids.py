@@ -11,7 +11,7 @@ def search_keyword(keywords, keyword):
         if keyword == "Open Data":
             current_ids = bing.get_results_ids_fb(keywords[keyword][language])
         else:
-            current_ids = bing.get_results_ids_fb(keywords["Open Data"][language] + " " + keywords[keyword][language])
+            current_ids = bing.get_results_ids_fb('"'+ keywords["Open Data"][language] + '" ' + keywords[keyword][language])
         all_ids = all_ids + current_ids
     all_ids=list(set(all_ids))
     db.insert_queue(all_ids, keyword)
